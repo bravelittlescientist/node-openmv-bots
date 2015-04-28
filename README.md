@@ -8,6 +8,8 @@ This code relies on a running instance of [OpenSimulator](http://opensimulator.o
 
 # Getting Started
 
+    $ npm install openmv-bots
+
 At minimum, this code requires a running instance of OpenSimulator and an existing user account. Update the example config file to contain your credentials.
 
     $ cp config.json.example config.json
