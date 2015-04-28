@@ -11,7 +11,7 @@ nconf.defaults({
   "start": "last" // Can also be "home" or "uri:<region>&<x-coord>&<y-coord>&<z-coord>"
 });
 
-http://opensimulator.org/wiki/SimulatorLoginProtocol
+// Login parameters documentation: http://opensimulator.org/wiki/SimulatorLoginProtocol
 function get_login_parameters (first_name, last_name, passwd, mac_address) {
     return {
         "first": first_name,
@@ -31,7 +31,8 @@ function get_login_parameters (first_name, last_name, passwd, mac_address) {
 
 function login() {
     var xmlrpc_client = xmlrpc.createClient(nconf.get('login_uri'));
-    
+    var first, last;
+
     async.auto({
         get_mac_address: function getMacAddress(callback) {
             macaddress.one(function(err, m) {
@@ -48,6 +49,7 @@ function login() {
             callback(null, get_login_parameters(first, last, pw, mac));
         }],
 
+        // Response documentation: http://opensimulator.org/wiki/SimulatorLoginProtocol
         client_login: ['login_parameters', function clientLogin(callback, results) {
             xmlrpc_client.methodCall('login_to_simulator', [results.login_parameters], function(error, value) {
                 callback(error, value);
@@ -55,10 +57,18 @@ function login() {
         }]
     }, function (err, results) {
         if (err) {
-            console.log(err);
+            console.log('Error: ' + err);
+            return;
         }
-        console.log(results);
+
+        var first = results.client_login.first_name;
+        var last = results.client_login.last_name;
+        var agent_id = results.client_login.agent_id;
+
+        console.log('Login successful for ' + first + ' ' + last + 
+            ' (Agent ' + agent_id + ') on ' + nconf.get('login_uri'));
+        return results.client_login;
     });
 }
 
-login()
+login();
