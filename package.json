@@ -1,7 +1,11 @@
 {
   "name": "openmv-bots",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Client bots for libopenmv",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bravelittlescientist/node-openmv-bots"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
