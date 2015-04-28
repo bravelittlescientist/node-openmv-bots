@@ -1,0 +1,9 @@
+{
+  "credentials": {
+    "first_name": "first_name",
+    "last_name": "last_name",
+    "passwd": "moonmoon"
+  },
+  "login_uri": "127.0.0.1:8002",
+  "start": "last"
+}
